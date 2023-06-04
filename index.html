@@ -1,0 +1,76 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Calculadora de Aprobación</title>
+    <script>
+        function calcularAprobacion() {
+            var nota1 = parseFloat(document.getElementById("nota1").value);
+            var nota2 = parseFloat(document.getElementById("nota2").value);
+            var parcial1 = parseFloat(document.getElementById("parcial1").value);
+            var parcial2 = parseFloat(document.getElementById("parcial2").value);
+            var asistencia = parseFloat(document.getElementById("asistencia").value);
+
+            var nota1Calculada = 0.2 * nota1 + 0.8 * parcial1;
+            var nota2Calculada = 0.2 * nota2 + 0.8 * parcial2;
+
+            var resultado;
+
+            if (
+                nota1Calculada >= 50 &&
+                nota2Calculada >= 50 &&
+                (nota1Calculada + nota2Calculada) / 2 >= 60 &&
+                asistencia >= 80
+            ) {
+                resultado = 'Aprobado por promoción';
+            } else if (nota1Calculada >= 60 && nota2Calculada < 60) {
+                var nota1FinalCorto = Math.min(60, nota1Calculada);
+                if ((nota1FinalCorto + nota2Calculada) / 2 >= 60) {
+                    resultado = 'Aprobado por final corto';
+                } else {
+                    resultado = 'Desaprobado';
+                }
+            } else if (nota2Calculada >= 60 && nota1Calculada < 60) {
+                var nota2FinalCorto = Math.min(60, nota2Calculada);
+                if ((nota1Calculada + nota2FinalCorto) / 2 >= 60) {
+                    resultado = 'Aprobado por final corto';
+                } else {
+                    resultado = 'Desaprobado';
+                }
+            } else if (nota1Calculada < 60 && nota2Calculada < 60) {
+                resultado = 'Desaprobado';
+            } else {
+                resultado = 'Aprobado por final largo';
+            }
+
+            document.getElementById("resultado").textContent = resultado;
+        }
+    </script>
+</head>
+<body>
+    <h1>Calculadora de Aprobación</h1>
+    <div>
+        <label for="nota1">Nota del Ejercicio con nota número 1:</label>
+        <input type="number" id="nota1">
+    </div>
+    <div>
+        <label for="parcial1">Nota del Primer Parcial:</label>
+        <input type="number" id="parcial1">
+    </div>
+    <div>
+        <label for="nota2">Nota del Ejercicio con nota número 2:</label>
+        <input type="number" id="nota2">
+    </div>
+    <div>
+        <label for="parcial2">Nota del Segundo Parcial:</label>
+        <input type="number" id="parcial2">
+    </div>
+    <div>
+        <label for="asistencia">Porcentaje de Asistencia:</label>
+        <input type="number" id="asistencia">
+    </div>
+    <button onclick="calcularAprobacion()">Calcular</button>
+    <h2>Resultado:</h2>
+    <div id="resultado"></div>
+</body>
+</html>
+
